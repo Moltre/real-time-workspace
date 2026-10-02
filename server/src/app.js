@@ -5,6 +5,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const cookieParser = require('cookie-parser');
+
 const corsOptions = require('./config/cors');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
@@ -20,11 +22,11 @@ app.use(morgan('dev'));
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
 
-// ── Body parsers ──────────────────────────────────────────────────────────────
+// ── Body & Cookie parsers ─────────────────────────────────────────────────────
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(cookieParser());
 
 // ── Routes ────────────────────────────────────────────────────────────────────
 app.use('/api/health', healthRoutes);

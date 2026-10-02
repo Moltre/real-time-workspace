@@ -9,8 +9,14 @@ const { createError } = require('../utils/apiError');
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const messages = errors.array().map((e) => e.msg);
-    return next(createError(422, messages.join(', ')));
+    const errorList = errors.array().map((err) => ({
+      field: err.path || err.param,
+      message: err.msg,
+    }));
+    const message = errorList.map((e) => e.message).join(', ');
+    const err = createError(422, message);
+    err.errors = errorList;
+    return next(err);
   }
   next();
 };
