@@ -23,8 +23,12 @@ const workspaceSchema = new mongoose.Schema(
     },
     members: [
       {
-        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        role: { type: String, enum: ['viewer', 'editor', 'admin'], default: 'editor' },
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+        role: {
+          type: String,
+          enum: ['OWNER', 'ADMIN', 'MEMBER', 'VIEWER', 'owner', 'admin', 'member', 'viewer'],
+          default: 'MEMBER',
+        },
         joinedAt: { type: Date, default: Date.now },
       },
     ],

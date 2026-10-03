@@ -16,8 +16,8 @@ const workspaceMemberSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['admin', 'member', 'viewer'],
-      default: 'member',
+      enum: ['OWNER', 'ADMIN', 'MEMBER', 'VIEWER', 'owner', 'admin', 'member', 'viewer'],
+      default: 'MEMBER',
       required: true,
     },
     joinedAt: {
@@ -29,11 +29,8 @@ const workspaceMemberSchema = new mongoose.Schema(
 );
 
 // ── Indexes ───────────────────────────────────────────────────────────────────
-// Ensure a user is only added once per workspace
 workspaceMemberSchema.index({ workspace: 1, user: 1 }, { unique: true });
-// Fast lookup of workspaces for a given user
 workspaceMemberSchema.index({ user: 1 });
-// Fast lookup of members for a given workspace
 workspaceMemberSchema.index({ workspace: 1 });
 
 module.exports = mongoose.model('WorkspaceMember', workspaceMemberSchema);
