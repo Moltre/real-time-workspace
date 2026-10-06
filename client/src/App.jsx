@@ -12,6 +12,7 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Workspaces from './pages/Workspaces'
 import Workspace from './pages/Workspace'
+import Board from './pages/Board'
 import Settings from './pages/Settings'
 
 export default function App() {
@@ -30,12 +31,15 @@ export default function App() {
 
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
+          {/* App shell with sidebar */}
           <Route element={<AppLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/workspaces" element={<Workspaces />} />
             <Route path="/workspace/:id" element={<Workspace />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
+          {/* Board page – full screen, no sidebar */}
+          <Route path="/board/:boardId" element={<Board />} />
         </Route>
 
         {/* Default redirect */}
